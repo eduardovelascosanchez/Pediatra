@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173b70">
+  <meta name="description" content="Guía educativa PALS 2025 con calculadora, simulador, dictado y debriefing.">
+  <title>PALS 2025 · Guía interactiva</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="app-header">
+  <div>
+    <p class="eyebrow">Dr. Eduardo Velasco Sánchez</p>
+    <h1>Guía PALS 2025</h1>
+    <p class="subtitle">Referencia educativa · Simulación · Debriefing</p>
+  </div>
+  <button id="installBtn" class="button secondary" hidden>Instalar app</button>
+</header>
+<nav class="tabs" aria-label="Secciones">
+  <button data-tab="home" class="tab active">Inicio</button>
+  <button data-tab="calc" class="tab">Calculadora</button>
+  <button data-tab="sim" class="tab">Simulador</button>
+  <button data-tab="debrief" class="tab">Debriefing</button>
+  <button data-tab="tables" class="tab">Tablas</button>
+  <button data-tab="notes" class="tab">Notas</button>
+</nav>
+<main>
+<section id="home" class="panel active">
+  <div class="hero card">
+    <div><span class="badge">PWA instalable y offline</span><h2>Herramienta rápida para entrenamiento PALS</h2><p>Integra referencia clínica educativa, cálculo por peso, simulación de casos, registro de eventos, dictado y debriefing estructurado.</p></div>
+    <div class="status-grid"><div><strong id="saveStatus">Guardado local activo</strong><span>La información permanece en este dispositivo.</span></div><div><strong id="offlineStatus">En línea</strong><span>La app puede seguir disponible sin conexión.</span></div></div>
+  </div>
+  <div class="grid two">
+    <article class="card"><h3>Evaluación sistemática</h3><ol><li>Impresión inicial y evaluación primaria ABCDE.</li><li>Identificar insuficiencia respiratoria, choque, bradicardia o paro.</li><li>Intervenir, reevaluar y anticipar deterioro.</li></ol></article>
+    <article class="card warning"><h3>Uso responsable</h3><p>Material educativo para profesionales entrenados. No sustituye el manual oficial, el juicio clínico, protocolos locales ni verificación independiente de dosis.</p></article>
+  </div>
+  <article class="card"><h3>Checklist de megacódigo</h3><div class="check-grid" id="megaChecklist"></div></article>
+</section>
+<section id="calc" class="panel">
+  <div class="grid two">
+    <article class="card"><h2>Datos del paciente</h2><label>Peso (kg)<input id="weight" type="number" min="0.5" max="200" step="0.1" placeholder="Ej. 18"></label><label>Edad (años)<input id="age" type="number" min="0" max="18" step="0.1" placeholder="Ej. 5"></label><label>Escenario<select id="rhythm"><option value="nonshock">Asistolia / AESP</option><option value="shock">FV / TV sin pulso</option><option value="brady">Bradicardia sintomática</option><option value="svt">Taquicardia supraventricular</option></select></label></article>
+    <article class="card"><h2>Algoritmo guiado</h2><ul id="algorithmList"></ul></article>
+  </div>
+  <article class="card"><h2>Dosis y energías calculadas</h2><div id="doseCards" class="dose-grid"><p class="muted">Capture el peso para calcular.</p></div><p class="footnote">Verifique siempre concentraciones, dosis máximas, indicación, vía y protocolo vigente antes de administrar.</p></article>
+</section>
+<section id="sim" class="panel">
+  <div class="grid two">
+    <article class="card"><h2>Simulador de casos</h2><label>Caso<select id="scenario"></select></label><button id="loadScenario" class="button">Cargar caso</button><div id="scenarioIntro" class="case-box"></div></article>
+    <article class="card"><h2>Cronómetro y eventos</h2><div class="timer" id="timer">00:00</div><div class="button-row"><button id="timerBtn" class="button">Iniciar</button><button id="cycleBtn" class="button secondary">Registrar ciclo</button><button id="epiBtn" class="button danger">Registrar epinefrina</button></div><div id="eventLog" class="event-log"></div></article>
+  </div>
+  <article class="card"><h2>Documentación del caso</h2><div class="grid two"><label>Evaluación inicial<textarea id="evaluation"></textarea><button class="dictate button secondary" data-target="evaluation">🎙 Dictar</button></label><label>Intervenciones<textarea id="interventions"></textarea><button class="dictate button secondary" data-target="interventions">🎙 Dictar</button></label><label>Respuesta<textarea id="response"></textarea><button class="dictate button secondary" data-target="response">🎙 Dictar</button></label><label>Evolución post-ROSC<textarea id="postrosc"></textarea><button class="dictate button secondary" data-target="postrosc">🎙 Dictar</button></label></div></article>
+</section>
+<section id="debrief" class="panel">
+  <article class="card"><h2>Debriefing estructurado</h2><p class="muted">Modelo educativo: reacción, descripción, análisis y resumen. Puede usarse en formato caliente o diferido.</p><div class="grid two"><label>Reacción inicial<textarea id="reaction" placeholder="¿Cómo se sintió el equipo?"></textarea></label><label>Descripción compartida<textarea id="description" placeholder="¿Qué ocurrió?"></textarea></label><label>Análisis / Advocacy–Inquiry<textarea id="analysis" placeholder="Observé… Me preocupa… Me gustaría entender…"></textarea></label><label>Resumen y acciones<textarea id="actions" placeholder="2–3 aprendizajes y acciones concretas"></textarea></label></div><button id="generateDebrief" class="button">Generar síntesis</button><div id="debriefOutput" class="output"></div></article>
+</section>
+<section id="tables" class="panel">
+  <article class="card"><h2>Tablas rápidas</h2><div class="table-wrap"><table><thead><tr><th>Elemento</th><th>Referencia educativa</th></tr></thead><tbody><tr><td>RCP</td><td>100–120/min; profundidad aproximada 1/3 del diámetro AP; minimizar pausas.</td></tr><tr><td>Epinefrina IV/IO</td><td>0.01 mg/kg cada 3–5 min (verificar concentración y máximo).</td></tr><tr><td>Desfibrilación</td><td>2 J/kg inicial; 4 J/kg segunda; ≥4 J/kg posteriores sin exceder máximo adulto según protocolo.</td></tr><tr><td>Cardioversión sincronizada</td><td>0.5–1 J/kg; aumentar a 2 J/kg si persiste.</td></tr><tr><td>Adenosina</td><td>0.1 mg/kg rápida (máx. 6 mg); segunda 0.2 mg/kg (máx. 12 mg).</td></tr><tr><td>Atropina</td><td>0.02 mg/kg; revisar dosis mínima/máxima y situación clínica.</td></tr><tr><td>Hipotensión</td><td>Lactante &lt;70; 1–10 años &lt;70 + (2 × edad); &gt;10 años &lt;90 mmHg.</td></tr></tbody></table></div></article>
+  <article class="card"><h2>Metas post-ROSC</h2><div class="check-grid"><label><input type="checkbox" data-save="post_oxygen"> Titular oxígeno evitando hipoxemia e hiperoxemia.</label><label><input type="checkbox" data-save="post_co2"> Evitar hipocapnia o hipercapnia extremas.</label><label><input type="checkbox" data-save="post_bp"> Mantener presión arterial adecuada para edad.</label><label><input type="checkbox" data-save="post_temp"> Prevenir fiebre y controlar temperatura.</label><label><input type="checkbox" data-save="post_glucose"> Vigilar glucosa y alteraciones metabólicas.</label><label><input type="checkbox" data-save="post_neuro"> Valoración neurológica multimodal.</label></div></article>
+</section>
+<section id="notes" class="panel">
+  <article class="card"><h2>Notas personales</h2><label>Título<input id="noteTitle" placeholder="Ej. Megacódigo FV"></label><label>Contenido<textarea id="freeNotes" rows="12"></textarea></label><div class="button-row"><button id="copyNotes" class="button">Copiar</button><button id="downloadNotes" class="button secondary">Descargar</button><button id="clearData" class="button danger">Borrar datos locales</button></div></article>
+</section>
+</main>
+<footer><p>© 2026 Dr. Eduardo Velasco Sánchez · Uso educativo. Verifique contra fuentes oficiales vigentes.</p></footer>
+<script src="app.js"></script>
+</body>
+</html>
